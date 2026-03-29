@@ -9,12 +9,12 @@ load_dotenv()
 DB_URL = os.getenv("DB_URL", "postgresql://admin:admin@localhost:5433/br_e_commerce_dwh")
 
 TABLE_ORDER = [
+  "fact_orders",
   "dim_customer",
   "dim_product",
   "dim_seller",
   "dim_date",
   "dim_review",
-  "fact_orders"
 ]
 
 def load(tables: dict[str, pd.DataFrame]) -> None:

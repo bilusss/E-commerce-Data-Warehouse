@@ -27,16 +27,25 @@ avg_order_value = pd.read_sql("""
 review_score = pd.read_sql("""
   SELECT AVG(review_score) FROM dim_review
 """, engine)
-# order_estimated_delivery_date = pd.read_sql("""
-#   SELECT ROUND(delay_days FROM fact_orders
-# """, engine)
+order_estimated_delivery_date = pd.read_sql("""
+  SELECT 
+    SUM(
+      CASE
+        WHEN delay_days > 0
+        THEN 1
+        ELSE 0
+      END
+    ) * 100.0 / COUNT(*)
+FROM fact_orders
+WHERE delay_days IS NOT NULL;
+""", engine)
 
 
 col1.metric("💰 Total revenue", f"R$ {total_revenue.iloc[0,0]:,}")
 col2.metric("📊 Total orders", f" {total_orders.iloc[0,0]}")
 col3.metric("🏷️ Average order value", f"R$ {avg_order_value.iloc[0,0]:,.2f}")
 col4.metric("⭐️ Average customer satisfaction", f"{review_score.iloc[0,0]:.2f}")
-# col5.metric("📦 Orders being late", f"R$ {order_estimated_delivery_date.iloc[0,0]:,.2f}")
+col5.metric("📦 Orders being late", f"{order_estimated_delivery_date.iloc[0,0]:.2f} %")
 
 # --- Sprzedaż miesięczna ---
 

@@ -1,17 +1,14 @@
-# stwórz mi tutaj baze danych w postgresql 17 otwierając port 5432:5432
-# taką żeby zapisywał bazę na dysku i nie usuwala sie przy down
-
 services:
   database:
     image: postgres:17
     container_name:
-      - br-e-commerce-dwh
+      br_e_commerce_dwh
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: br-e-commerce-dwh
+      POSTGRES_DB: br_e_commerce_dwh
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pg_volume:/var/lib/postgresql/data
 volumes:

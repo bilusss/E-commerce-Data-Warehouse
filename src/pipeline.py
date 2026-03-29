@@ -1,5 +1,6 @@
 from extract import extract
 from transform import transform
+from load import load
 from logger import get_logger
 import pandas as pd
 import time
@@ -16,9 +17,10 @@ def run_pipeline():
     raw = extract()
 
     logger.info("Step 2/3: transform")
-    transform(raw)
+    transformed = transform(raw)
     
-    # logger.info("Step 3/3: load")
+    logger.info("Step 3/3: load")
+    load(transformed)
 
     logger.info(f"Pipeline finished in {time.perf_counter() - start}s")
 

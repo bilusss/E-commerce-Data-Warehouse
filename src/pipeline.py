@@ -37,3 +37,4 @@ if __name__ == "__main__":
   run_pipeline()
 
   logger.info(f"Pipeline complete")
+  logger.info("="*30)
